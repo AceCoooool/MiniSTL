@@ -16,7 +16,7 @@ namespace MiniSTL {
     inline typename vector<T, Alloc>::iterator
     vector<T, Alloc>::allocate_and_fill(const size_type n, const value_type &value) {
         iterator result = data_allocator::allocate(n);
-        uninitialized_fill_n(result, n, value);
+        MiniSTL::uninitialized_fill_n(result, n, value);
         return result;
     }
 
@@ -57,15 +57,15 @@ namespace MiniSTL {
                 const size_type elems_after = finish - position;
                 iterator old_finish = finish;
                 if (elems_after > n) {
-                    uninitialized_copy(finish - n, finish, finish);
+                    MiniSTL::uninitialized_copy(finish - n, finish, finish);
                     finish += n;
                     // copy_backward needs _SCL_SECURE_NO_WARNINGS
                     std::copy_backward(position, old_finish - n, old_finish); // TODO
                     std::fill(position, position + n, value_copy);  // TODO
                 } else {
-                    uninitialized_fill_n(finish, n - elems_after, value_copy);
+                    MiniSTL::uninitialized_fill_n(finish, n - elems_after, value_copy);
                     finish += n - elems_after;
-                    uninitialized_copy(position, old_finish, finish);
+                    MiniSTL::uninitialized_copy(position, old_finish, finish);
                     finish += elems_after;
                     std::fill(position, old_finish, value_copy); // TODO
                 }
@@ -75,11 +75,11 @@ namespace MiniSTL {
                 iterator new_start = data_allocator::allocate(new_size);
                 iterator new_finish = new_start;
                 try {
-                    new_finish = uninitialized_copy(start, position, new_start);
-                    new_finish = uninitialized_fill_n(new_finish, n, value);
-                    new_finish = uninitialized_copy(position, finish, new_finish);
+                    new_finish = MiniSTL::uninitialized_copy(start, position, new_start);
+                    new_finish = MiniSTL::uninitialized_fill_n(new_finish, n, value);
+                    new_finish = MiniSTL::uninitialized_copy(position, finish, new_finish);
                 } catch (std::exception &) {
-                    destroy(new_start, new_finish);
+                    MiniSTL::destroy(new_start, new_finish);
                     data_allocator::deallocate(new_start, new_size);
                     throw;
                 }
@@ -305,7 +305,7 @@ namespace MiniSTL {
         if (n <= capacity())
             return;
         T *newStart = data_allocator::allocate(n);
-        T *newFinish = uninitialized_copy(begin(), end(), newStart);
+        T *newFinish = MiniSTL::uninitialized_copy(begin(), end(), newStart);
         destroy_and_deallocate();
 
         start = newStart;

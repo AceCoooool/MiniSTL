@@ -20,6 +20,7 @@
 #include "Associative/Multimap/test_multimap.h"
 #include "Associative/Hashtable/test_hash.h"
 #include "Associative/Hashset/test_hash_set.h"
+#include "Associative/Hashmap/test_hash_map.h"
 
 
 using namespace MiniSTL;
@@ -48,12 +49,8 @@ int main() {
 //    test_multiset();
 //    test_multimap();
 //    test_hash();
-    test_hast_set();
-
-//    MiniSTL::vector<int> a = {1, 2};
-//    MiniSTL::vector<int> b{6, 7, 8};
-//    a.insert(a.begin(), b.begin(), b.end());
-//    for (auto c: a)
-//        std::cout << c << " ";
-
+//    test_hast_set();
+//    test_hast_multiset();
+//    test_hash_map();
+    test_hash_multimap();
 }

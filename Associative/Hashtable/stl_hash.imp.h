@@ -59,8 +59,9 @@ namespace MiniSTL {
         try {
             construct(&n->val, v);
             return n;
-        } catch (std::exception) {
-            node_allocator::deallocate(n);
+        } catch (...) {
+            put_node(n);
+            throw;
         }
     }
 
